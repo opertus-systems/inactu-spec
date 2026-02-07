@@ -32,11 +32,19 @@ npm run check
 - Schema-vs-vector validation for all v0 and draft schema sets.
 - Capability-evaluation vector execution with expected allow/deny assertions.
 
+Rust users can run the crate-based harness:
+
+```bash
+cargo run -p inactu-conformance-harness --bin inactu-conformance
+```
+
 ## Consumers
 
 - `inactu-cli`: reference implementation and release gate.
 - `inactu-sdk`: SDK-side parsers, validators, and protocol bindings.
 - Third-party runtimes/verifiers: pin schema files and vectors by tag.
+
+Rust convenience crates are documented in `docs/rust-crates.md`.
 
 ## License
 

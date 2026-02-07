@@ -1,0 +1,37 @@
+{
+  "schema_version": "v0",
+  "pipeline_id": "com.opertus.demo.cycle",
+  "nodes": [
+    {
+      "id": "a",
+      "skill": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    },
+    {
+      "id": "b",
+      "skill": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+    }
+  ],
+  "edges": [
+    {
+      "from": "a",
+      "to": "b",
+      "map": [
+        {
+          "from_path": "$.x",
+          "to_path": "$.x"
+        }
+      ]
+    },
+    {
+      "from": "b",
+      "to": "a",
+      "map": [
+        {
+          "from_path": "$.y",
+          "to_path": "$.y"
+        }
+      ]
+    }
+  ],
+  "input_mapping": []
+}

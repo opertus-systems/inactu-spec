@@ -1,0 +1,185 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Inactu Pipeline DAG v0",
+  "type": "object",
+  "required": ["schema_version", "pipeline_id", "nodes", "edges", "input_mapping"],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "v0"
+    },
+    "pipeline_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "nodes": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/definitions/node"
+      }
+    },
+    "edges": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/edge"
+      }
+    },
+    "input_mapping": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/input_mapping_rule"
+      }
+    },
+    "resource_limits": {
+      "$ref": "#/definitions/resource_limits"
+    },
+    "required_cap_sets": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {
+        "type": "array",
+        "minItems": 1,
+        "items": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "run_policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "no_network_after_nodes": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "max_total_bytes": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "redaction": {
+          "type": "object",
+          "required": ["mode"],
+          "additionalProperties": false,
+          "properties": {
+            "mode": {
+              "type": "string",
+              "enum": ["strict", "permissive"]
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "node": {
+      "type": "object",
+      "required": ["id", "skill"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "skill": {
+          "oneOf": [
+            {
+              "type": "string",
+              "pattern": "^sha256:[0-9a-f]{64}$"
+            },
+            { "$ref": "#/definitions/pinned_skill_ref" }
+          ]
+        },
+        "input": { "type": "object" },
+        "requested_caps": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "limits": {
+          "$ref": "#/definitions/resource_limits"
+        },
+        "on_error": {
+          "type": "string",
+          "enum": ["abort", "skip"]
+        }
+      }
+    },
+    "edge": {
+      "type": "object",
+      "required": ["from", "to", "map"],
+      "additionalProperties": false,
+      "properties": {
+        "from": { "type": "string", "minLength": 1 },
+        "to": { "type": "string", "minLength": 1 },
+        "map": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/definitions/map_rule"
+          }
+        }
+      }
+    },
+    "map_rule": {
+      "type": "object",
+      "required": ["from_path", "to_path"],
+      "additionalProperties": false,
+      "properties": {
+        "from_path": {
+          "type": "string",
+          "pattern": "^\\$\\.[A-Za-z0-9_]+(\\.[A-Za-z0-9_]+)*$"
+        },
+        "to_path": {
+          "type": "string",
+          "pattern": "^\\$\\.[A-Za-z0-9_]+(\\.[A-Za-z0-9_]+)*$"
+        }
+      }
+    },
+    "pinned_skill_ref": {
+      "type": "object",
+      "required": ["hash"],
+      "additionalProperties": false,
+      "properties": {
+        "hash": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        },
+        "source": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "resource_limits": {
+      "type": "object",
+      "required": ["cpu_ms", "mem_mb", "io_bytes"],
+      "additionalProperties": false,
+      "properties": {
+        "cpu_ms": { "type": "integer", "minimum": 1 },
+        "mem_mb": { "type": "integer", "minimum": 1 },
+        "io_bytes": { "type": "integer", "minimum": 1 },
+        "timeout_ms": { "type": "integer", "minimum": 1 }
+      }
+    },
+    "input_mapping_rule": {
+      "type": "object",
+      "required": ["from", "from_path", "to", "to_path"],
+      "additionalProperties": false,
+      "properties": {
+        "from": {
+          "type": "string",
+          "enum": ["input", "context"]
+        },
+        "from_path": {
+          "type": "string",
+          "pattern": "^\\$\\.[A-Za-z0-9_]+(\\.[A-Za-z0-9_]+)*$"
+        },
+        "to": { "type": "string", "minLength": 1 },
+        "to_path": {
+          "type": "string",
+          "pattern": "^\\$\\.[A-Za-z0-9_]+(\\.[A-Za-z0-9_]+)*$"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "name": "inactu-spec",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Normative Inactu protocol/specification and conformance vectors",
+  "license": "(MIT OR Apache-2.0)",
+  "scripts": {
+    "lint": "node tools/lint-json.mjs",
+    "conformance": "node tools/run-conformance.mjs",
+    "check": "npm run lint && npm run conformance"
+  },
+  "devDependencies": {
+    "ajv": "^8.17.1",
+    "ajv-formats": "^3.0.1",
+    "yaml": "^2.8.1"
+  }
+}

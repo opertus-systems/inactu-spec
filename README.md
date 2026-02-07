@@ -1,0 +1,43 @@
+# inactu-spec
+
+Public contract repository for Inactu.
+
+This repo is implementation-neutral: it defines normative protocol behavior,
+schemas, and conformance vectors that runtimes, verifiers, and SDKs can pin.
+
+## Contents
+
+- `SPEC.md`: top-level normative index.
+- `spec/`: normative documents and JSON schemas.
+- `test-vectors/`: deterministic conformance fixtures (good/bad).
+- `docs/versioning-policy.md`: compatibility and release semantics.
+- `docs/compatibility-matrix.md`: implementation compatibility tracking.
+
+## Stability
+
+Current stable line: `v0`.
+
+Experimental drafts are explicitly marked with `experimental` in file names
+or are placed under `spec/rfcs/`.
+
+## Conformance
+
+```bash
+npm install
+npm run check
+```
+
+`npm run check` performs:
+- JSON syntax linting for the whole repository.
+- Schema-vs-vector validation for all v0 and draft schema sets.
+- Capability-evaluation vector execution with expected allow/deny assertions.
+
+## Consumers
+
+- `inactu-cli`: reference implementation and release gate.
+- `inactu-sdk`: SDK-side parsers, validators, and protocol bindings.
+- Third-party runtimes/verifiers: pin schema files and vectors by tag.
+
+## License
+
+Dual licensed under MIT OR Apache-2.0. See `LICENSE`.

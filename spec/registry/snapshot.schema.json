@@ -1,0 +1,42 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Registry Snapshot (v0)",
+  "type": "object",
+  "required": [
+    "snapshot_hash",
+    "timestamp",
+    "entries"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "snapshot_hash": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "timestamp": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "entries": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": [
+          "sha256",
+          "md5"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "sha256": {
+            "type": "string",
+            "pattern": "^sha256:[0-9a-f]{64}$"
+          },
+          "md5": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          }
+        }
+      }
+    }
+  }
+}

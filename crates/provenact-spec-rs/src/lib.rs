@@ -345,30 +345,26 @@ pub fn evaluate_capability(policy: &Policy, capability: &Capability) -> bool {
                     .unwrap_or(false)
             })
         }
-        "kv.read" => policy
-            .capability_ceiling
-            .kv
-            .read
-            .iter()
-            .any(|item| item == "*" || item == &capability.value),
-        "kv.write" => policy
-            .capability_ceiling
-            .kv
-            .write
-            .iter()
-            .any(|item| item == "*" || item == &capability.value),
-        "queue.publish" => policy
-            .capability_ceiling
-            .queue
-            .publish
-            .iter()
-            .any(|item| item == "*" || item == &capability.value),
-        "queue.consume" => policy
-            .capability_ceiling
-            .queue
-            .consume
-            .iter()
-            .any(|item| item == "*" || item == &capability.value),
+        "kv.read" => {
+            policy.capability_ceiling.kv.read.iter().any(|item| {
+                !capability.value.is_empty() && (item == "*" || item == &capability.value)
+            })
+        }
+        "kv.write" => {
+            policy.capability_ceiling.kv.write.iter().any(|item| {
+                !capability.value.is_empty() && (item == "*" || item == &capability.value)
+            })
+        }
+        "queue.publish" => {
+            policy.capability_ceiling.queue.publish.iter().any(|item| {
+                !capability.value.is_empty() && (item == "*" || item == &capability.value)
+            })
+        }
+        "queue.consume" => {
+            policy.capability_ceiling.queue.consume.iter().any(|item| {
+                !capability.value.is_empty() && (item == "*" || item == &capability.value)
+            })
+        }
         _ => false,
     }
 }
@@ -558,5 +554,46 @@ mod tests {
             value: "https://api.example.test/v1/%2f..%2fadmin".to_string(),
         };
         assert!(!evaluate_capability(&policy, &escaped));
+    }
+
+    #[test]
+    fn kv_and_queue_capabilities_require_non_empty_values() {
+        let policy = Policy {
+            version: 1,
+            trusted_signers: vec!["alice.dev".to_string()],
+            capability_ceiling: CapabilityCeiling {
+                kv: KvCeiling {
+                    read: vec!["*".to_string()],
+                    write: vec!["*".to_string()],
+                },
+                queue: QueueCeiling {
+                    publish: vec!["*".to_string()],
+                    consume: vec!["*".to_string()],
+                },
+                ..CapabilityCeiling::default()
+            },
+        };
+
+        let kv_empty = Capability {
+            kind: "kv.read".to_string(),
+            value: String::new(),
+        };
+        let queue_empty = Capability {
+            kind: "queue.publish".to_string(),
+            value: String::new(),
+        };
+        let kv_non_empty = Capability {
+            kind: "kv.read".to_string(),
+            value: "user-profile".to_string(),
+        };
+        let queue_non_empty = Capability {
+            kind: "queue.publish".to_string(),
+            value: "jobs".to_string(),
+        };
+
+        assert!(!evaluate_capability(&policy, &kv_empty));
+        assert!(!evaluate_capability(&policy, &queue_empty));
+        assert!(evaluate_capability(&policy, &kv_non_empty));
+        assert!(evaluate_capability(&policy, &queue_non_empty));
     }
 }

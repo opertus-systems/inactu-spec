@@ -1,5 +1,12 @@
 # Changelog
 
+## Unreleased
+
+- Security remediation for `RUSTSEC-2026-0009`:
+  - verified `Cargo.lock` resolves `time` at `0.3.47`
+  - verified no `time 0.3.36` remains in the workspace lockfile
+  - `cargo audit` clean for the advisory
+
 ## 0.1.0 - 2026-02-07
 
 Initial standalone `provenact-spec` release:

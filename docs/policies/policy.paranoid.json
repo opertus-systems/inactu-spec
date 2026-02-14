@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "trusted_signers": [
+    "opertus.systems"
+  ],
+  "capability_ceiling": {
+    "fs": {
+      "read": [],
+      "write": []
+    },
+    "net": [],
+    "kv": {
+      "read": [],
+      "write": []
+    },
+    "queue": {
+      "publish": [],
+      "consume": []
+    },
+    "env": [],
+    "exec": false,
+    "time": false,
+    "random": false
+  }
+}

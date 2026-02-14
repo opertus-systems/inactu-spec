@@ -15,6 +15,10 @@ schemas, and conformance vectors that runtimes, verifiers, and SDKs can pin.
 - `docs/repo-remediation-backlog.md`: prioritized cross-repo remediation plan.
 - `docs/source-of-truth-sync-policy.md`: sync governance for shared artifacts.
 - `docs/remediation-execution-board.md`: issue-ready execution board.
+- `docs/KEY_MANAGEMENT.md`: trust-anchor bootstrap, rotation, and revocation runbook.
+- `docs/policies/`: enterprise-ready starter policy templates.
+- `docs/audit-envelope.md`: NDJSON audit export contract for SIEM pipelines.
+- `docs/audit/execution-event.schema.json`: JSON schema for audit export lines.
 - `tools/check-sync-parity.sh`: CI parity checker for mirrored artifacts.
 - `tools/generate-sync-manifest.sh`: machine-readable sync metadata generator.
 

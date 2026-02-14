@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "trusted_signers": [
+    "opertus.systems"
+  ],
+  "capability_ceiling": {
+    "fs": {
+      "read": [
+        "/workspace"
+      ],
+      "write": [
+        "/workspace"
+      ]
+    },
+    "net": [],
+    "env": [],
+    "exec": false,
+    "time": false,
+    "random": false
+  }
+}

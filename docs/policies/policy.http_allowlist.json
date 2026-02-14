@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "trusted_signers": [
+    "opertus.systems"
+  ],
+  "capability_ceiling": {
+    "net": [
+      "https://api.open-meteo.com/v1/",
+      "https://api.example.com/v2/readonly/"
+    ],
+    "exec": false,
+    "time": false,
+    "random": false
+  }
+}

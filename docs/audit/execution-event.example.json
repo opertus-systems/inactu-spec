@@ -1,0 +1,26 @@
+{
+  "schema_version": "1.0.0",
+  "timestamp": "2026-02-14T06:40:00Z",
+  "request_id": "req_01JABCDXYZ",
+  "tool_digest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "policy_hash": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "receipt_hash": "sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+  "decision": "allow",
+  "reason": "verified_execution_success",
+  "context_id": "ctx_local_phase0",
+  "runtime_profile": "v0",
+  "signer_ids": [
+    "alice.dev"
+  ],
+  "caps_requested": [
+    "env:HOME"
+  ],
+  "caps_granted": [
+    "env:HOME"
+  ],
+  "caps_used": [
+    "env:HOME"
+  ],
+  "input_hash": "sha256:dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+  "output_hash": "sha256:eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+}
